@@ -63,6 +63,15 @@ public class CapacitorMusicControls extends Plugin {
 
 	private MediaSessionCallback mMediaSessionCallback = new MediaSessionCallback(this);
 
+	public CapacitorMusicControls() {
+		instance = this;
+	}
+
+	// TODO : Remove this fast fix
+	private static CapacitorMusicControls instance;
+	public static CapacitorMusicControls GetInstance() {
+		return instance;
+	}
 
 	@PluginMethod()
     public void create(PluginCall call) {
@@ -185,7 +194,7 @@ public class CapacitorMusicControls extends Plugin {
 		}
 		// end avoid spawn
 
-		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);
+		this.mMessageReceiver = new MusicControlsBroadcastReceiver();
 		this.registerBroadcaster(this.mMessageReceiver);
 
 		this.mediaSessionCompat = new MediaSessionCompat(context, "capacitor-music-controls-media-session", null, this.mediaButtonPendingIntent);
@@ -217,7 +226,7 @@ public class CapacitorMusicControls extends Plugin {
 			this.mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			Intent headsetIntent = new Intent("music-controls-media-button");
 			this.mediaButtonPendingIntent = PendingIntent.getBroadcast(
-				context, 0, headsetIntent, 
+				context, 0, headsetIntent,
 				Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT
 			);
 			this.registerMediaButtonEvent();
@@ -244,8 +253,8 @@ public class CapacitorMusicControls extends Plugin {
 		this.stopMessageReceiver(context);
 		this.unregisterMediaButtonEvent();
 		this.stopServiceConnection(activity);
-		
-		
+
+
 		call.resolve();
 	}
 
@@ -274,7 +283,7 @@ public class CapacitorMusicControls extends Plugin {
         this.mMessageReceiver = null;
     }
 
-		
+
 	}
 
 	public void stopServiceConnection(Activity activity){
@@ -351,7 +360,7 @@ public class CapacitorMusicControls extends Plugin {
 	public void controlsNotification(JSObject ret){
 
 		Log.i(TAG, "controlsNotification fired "  + ret.getString("message"));
-		// notifyListeners("controlsNotification", ret);
+		notifyListeners("controlsNotification", ret);
 		this.bridge.triggerJSEvent("controlsNotification", "document", ret.toString());
 
   }
