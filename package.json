@@ -1,7 +1,7 @@
 {
-  "name": "capacitor-music-controls-plugin",
-  "version": "6.1.0",
-  "description": "Implementation of MusicControls for Capacitor 3+ projects",
+  "name": "capacitor-music-controls-plugin-rsg",
+  "version": "6.1.1",
+  "description": "Fork of capacitor-music-controls with update on CapacitorMusicControls instance handling in MusicControlBroadcastReceiver (due to update in manifest to handle missing MusicControlsBroadcastReceiver reference)",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {
@@ -11,6 +11,11 @@
     "prepublishOnly": "npm run build"
   },
   "author": "Ingage",
+  "contributors": [
+    {
+      "name": "f-antoine"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "@capacitor/core": "^6.0.0"
@@ -30,7 +35,10 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "music-controls",
+    "media",
+    "audio"
   ],
   "capacitor": {
     "ios": {
@@ -42,9 +50,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ingageco/capacitor-music-controls-plugin"
+    "url": "https://github.com/f-antoine/capacitor-music-controls-plugin"
   },
   "bugs": {
-    "url": "https://github.com/ingageco/capacitor-music-controls-plugin/issues"
+    "url": "https://github.com/f-antoine/capacitor-music-controls-plugin/issues"
   }
 }
