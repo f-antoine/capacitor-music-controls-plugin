@@ -2,6 +2,8 @@
 >
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+  <uses-permission android:name="android.permission.BLUETOOTH" />
+  
   <application>
     <service android:name="com.ingageco.capacitormusiccontrols.MusicControlsNotificationKiller"
       android:stopWithTask="true" android:foregroundServiceType="mediaPlayback" />
