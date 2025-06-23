@@ -13,4 +13,7 @@ export declare class CapacitorMusicControlsWeb extends WebPlugin implements Capa
         elapsed: number;
         isPlaying: boolean;
     }): void;
+    updateIsLoading(args: {
+        isLoading: boolean;
+    }): void;
 }
