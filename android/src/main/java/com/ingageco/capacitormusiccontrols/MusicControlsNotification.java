@@ -101,6 +101,16 @@ public class MusicControlsNotification {
 		this.createNotification();
 	}
 
+	// Toggle the loading state
+	public void updateIsLoading(boolean isLoading) {
+			Log.i(TAG, "updateIsLoading: isLoading: " + isLoading);
+			Log.i(TAG, "updateIsLoading: pre:this.infos.isLoading: " + this.infos.isLoading);
+			this.infos.isLoading = isLoading;
+			Log.i(TAG, "updateIsLoading: post:this.infos.isLoading: " + this.infos.isLoading);
+			this.createBuilder();
+			this.createNotification();
+	}
+
 	// Toggle the dismissable status
 	public void updateDismissable(boolean dismissable) {
 		this.infos.dismissable=dismissable;
@@ -178,7 +188,7 @@ public class MusicControlsNotification {
 		if (this.infos.artist != null){
 			builder.setContentText(this.infos.artist);
 		}
-		
+
 		builder.setWhen(0);
 
 		// set if the notification can be destroyed by swiping
@@ -194,7 +204,7 @@ public class MusicControlsNotification {
 		if (this.infos.ticker != null && !this.infos.ticker.isEmpty()){
 			builder.setTicker(this.infos.ticker);
 		}
-		
+
 		builder.setPriority(Notification.PRIORITY_MAX);
 
 		builder.setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -210,7 +220,10 @@ public class MusicControlsNotification {
 		}
 
 		if(usePlayingIcon){
-			if (this.infos.isPlaying){
+			if (this.infos.isLoading){
+				builder.setSmallIcon(this.getResourceId(this.infos.loadingIcon, android.R.drawable.ic_popup_sync));
+			}
+			else if (this.infos.isPlaying){
 				builder.setSmallIcon(this.getResourceId(this.infos.playIcon, android.R.drawable.ic_media_play));
 			} else {
 				builder.setSmallIcon(this.getResourceId(this.infos.pauseIcon, android.R.drawable.ic_media_pause));
@@ -239,7 +252,13 @@ public class MusicControlsNotification {
 			PendingIntent previousPendingIntent = PendingIntent.getBroadcast(context, 1, previousIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_IMMUTABLE : 0);
 			builder.addAction(this.getResourceId(this.infos.prevIcon, android.R.drawable.ic_media_previous), "", previousPendingIntent);
 		}
-		if (this.infos.isPlaying){
+
+		if (this.infos.isLoading){
+			/* Loading  */
+			nbControls++;
+			builder.addAction(this.getResourceId("ic_hourglass", android.R.drawable.ic_popup_sync), "", null);
+		}
+		else if (this.infos.isPlaying){
 			/* Pause  */
 			nbControls++;
 			Intent pauseIntent = new Intent("music-controls-pause");

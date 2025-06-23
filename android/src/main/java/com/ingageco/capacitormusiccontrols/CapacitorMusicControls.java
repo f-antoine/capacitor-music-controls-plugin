@@ -317,7 +317,29 @@ public class CapacitorMusicControls extends Plugin {
 		} catch(JSONException e){
 			call.reject("error updateIsPlaying: "+e.toString());
 		}
+	}
 
+	@PluginMethod()
+	public void updateIsLoading(PluginCall call) {
+			JSObject params = call.getData();
+			if (this.notification == null) {
+					call.resolve();
+					return;
+			}
+			try {
+					final boolean isLoading = params.getBoolean("isLoading");
+					this.notification.updateIsLoading(isLoading);
+					
+					// Optionnel : gérer l'état du MediaSession pour le loading
+					if (isLoading) {
+							setMediaPlaybackState(PlaybackStateCompat.STATE_BUFFERING);
+					}
+					// Note: vous pourriez vouloir restaurer l'état précédent quand isLoading = false
+					
+					call.resolve();
+			} catch(JSONException e) {
+					call.reject("error updateIsLoading: " + e.toString());
+			}
 	}
 
 	@PluginMethod()

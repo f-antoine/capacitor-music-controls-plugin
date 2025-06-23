@@ -4,6 +4,7 @@ export interface CapacitorMusicControlsInfo {
     artist?: string;
     cover?: string;
     isPlaying?: boolean;
+    isLoading?: boolean;
     dismissable?: boolean;
     hasPrev?: boolean;
     hasNext?: boolean;
@@ -18,6 +19,7 @@ export interface CapacitorMusicControlsInfo {
     elapsed?: number;
     ticker?: string;
     playIcon?: string;
+    loadingIcon?: string;
     pauseIcon?: string;
     prevIcon?: string;
     nextIcon?: string;
@@ -42,6 +44,13 @@ export interface CapacitorMusicControlsPlugin {
      */
     updateIsPlaying(args: {
         isPlaying: boolean;
+    }): void;
+    /**
+     * Toggle is loading/is not loading:
+     * @param isLoading {Object}
+     */
+    updateIsLoading(args: {
+        isLoading: boolean;
     }): void;
     /**
      * Update elapsed time, optionally toggle play/pause:
